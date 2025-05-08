@@ -20,11 +20,6 @@ public class HeadDetector : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Called when another Collider enters the trigger zone.
-    /// Ensure this GameObject or the other has a Collider with 'Is Trigger' enabled.
-    /// </summary>
-    /// <param name="other">The Collider of the incoming GameObject</param>
     void OnTriggerEnter(Collider other)
     {
         // Check if the other Collider's tag matches any of the specified tags
@@ -42,11 +37,6 @@ public class HeadDetector : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Called when another Collider exits the trigger zone.
-    /// Stops the audio if the Collider's tag matches.
-    /// </summary>
-    /// <param name="other">The Collider of the exiting GameObject</param>
     void OnTriggerExit(Collider other)
     {
         // Check if the other Collider's tag matches any of the specified tags

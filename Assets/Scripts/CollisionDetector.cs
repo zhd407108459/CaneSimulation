@@ -9,38 +9,38 @@ public class CollisionDetector : MonoBehaviour
     public Material collisionMaterial;
     public AudioClip defaultCollisionSound;
 
-    // 标签列表，与下方的音效列表一一对应
+    // List of tags, each corresponding to an entry in the collisionSounds list
     public List<string> collisionTags = new List<string>();
-    // 对应每个标签的音效列表，注意索引要对应
+    // List of audio clips for each tag; indices must match collisionTags
     public List<AudioClip> collisionSounds = new List<AudioClip>();
 
-    // 用于控制是否显示碰撞指示器
+    // Toggle whether to show the collision indicator
     public bool showCollisionIndicator = true;
 
-    // 最大速度：当速度达到此值或以上时，音量为最大（1）
+    // Maximum speed: when reached or exceeded, volume is 1
     public float maxSpeed = 10f;
-    // 最小速度：低于此速度时音量为0
+    // Minimum speed: below this, volume is 0
     public float minSpeed = 0.1f;
 
     private MeshRenderer meshRenderer;
     private AudioSource audioSource;
 
-    // 记录当前触发碰撞的 Collider 数量
+    // Count of currently colliding colliders
     private int collisionCount = 0;
 
-    // 用于计算移动速度的上一帧位置
+    // Last frame's position to calculate movement speed
     private Vector3 lastPosition;
 
     void Start()
     {
-        // 获取 MeshRenderer 并设置默认材质
+        // Get the MeshRenderer and apply the default material
         meshRenderer = GetComponent<MeshRenderer>();
         if (meshRenderer != null && defaultMaterial != null)
         {
             meshRenderer.material = defaultMaterial;
         }
 
-        // 获取或添加 AudioSource 组件，并设置为循环播放
+        // Get or add an AudioSource component and configure looping
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
@@ -49,24 +49,24 @@ public class CollisionDetector : MonoBehaviour
         audioSource.loop = true;
         audioSource.playOnAwake = false;
 
-        // 根据 showCollisionIndicator 决定是否隐藏碰撞指示器
+        // Show or hide the collision indicator based on the setting
         if (collisionIndicator != null && !showCollisionIndicator)
         {
             collisionIndicator.SetActive(false);
         }
 
-        // 初始化 lastPosition
+        // Initialize lastPosition
         lastPosition = transform.position;
     }
 
     void Update()
     {
-        // 用帧之间的位置差计算速度（单位：米/秒）
+        // Calculate speed (meters per second) based on positional change
         float distance = Vector3.Distance(transform.position, lastPosition);
         float speed = distance / Time.deltaTime;
         float normalizedSpeed = 0f;
 
-        // 低于最小速度时无声音，高于最小速度时将 [minSpeed, maxSpeed] 映射到 [0, 1]
+        // Map [minSpeed, maxSpeed] to [0, 1] for volume control
         if (speed < minSpeed)
         {
             normalizedSpeed = 0f;
@@ -76,11 +76,12 @@ public class CollisionDetector : MonoBehaviour
             normalizedSpeed = Mathf.Clamp01((speed - minSpeed) / (maxSpeed - minSpeed));
         }
 
-        // 根据速度调整音频整体音量
+        // Adjust audio volume based on speed
         if (audioSource != null)
         {
             audioSource.volume = normalizedSpeed;
         }
+
         lastPosition = transform.position;
     }
 
@@ -88,7 +89,7 @@ public class CollisionDetector : MonoBehaviour
     {
         collisionCount++;
 
-        // 第一个 Collider 进入时，显示碰撞效果
+        // On first collision, activate indicator and change material
         if (collisionCount == 1)
         {
             if (collisionIndicator != null && showCollisionIndicator)
@@ -101,21 +102,18 @@ public class CollisionDetector : MonoBehaviour
             }
         }
 
-        // 根据碰撞对象的标签选择音效
+        // Select the appropriate sound based on the collider's tag
         AudioClip selectedSound = defaultCollisionSound;
         for (int i = 0; i < collisionTags.Count; i++)
         {
-            if (other.CompareTag(collisionTags[i]))
+            if (other.CompareTag(collisionTags[i]) && i < collisionSounds.Count && collisionSounds[i] != null)
             {
-                if (i < collisionSounds.Count && collisionSounds[i] != null)
-                {
-                    selectedSound = collisionSounds[i];
-                    break;
-                }
+                selectedSound = collisionSounds[i];
+                break;
             }
         }
 
-        // 播放选中的音效
+        // Play the selected sound
         if (audioSource != null)
         {
             audioSource.clip = selectedSound;
@@ -132,7 +130,7 @@ public class CollisionDetector : MonoBehaviour
         if (collisionCount <= 0)
         {
             collisionCount = 0;
-            // 所有 Collider 都退出时，恢复默认状态
+            // Reset to default state when no collisions remain
             if (collisionIndicator != null && showCollisionIndicator)
             {
                 collisionIndicator.SetActive(false);

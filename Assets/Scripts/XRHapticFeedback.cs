@@ -8,7 +8,7 @@ public class XRHapticFeedback : MonoBehaviour
 
     void Start()
     {
-        // 尝试获取右手控制器
+        // Retrieve the right-hand controller
         List<InputDevice> devices = new List<InputDevice>();
         InputDevices.GetDevicesAtXRNode(XRNode.RightHand, devices);
         if (devices.Count > 0)
@@ -21,7 +21,7 @@ public class XRHapticFeedback : MonoBehaviour
     {
         if (rightHandDevice.isValid)
         {
-            // amplitude 的范围通常是 0.0 ~ 1.0
+            // amplitude ranges from 0.0 to 1.0
             rightHandDevice.SendHapticImpulse(0, amplitude, duration);
         }
     }

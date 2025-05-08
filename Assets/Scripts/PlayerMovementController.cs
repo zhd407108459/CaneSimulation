@@ -6,7 +6,7 @@ public class PlayerMovementController : MonoBehaviour
 {
     public float speed;
     public GameObject playerObject;
-    // 指定 Center Eye 的 Transform，在 Inspector 中赋值（例如 OVRCameraRig 的 CenterEyeAnchor）
+    // Reference to the Center Eye Transform, assign in the Inspector (e.g., CenterEyeAnchor from OVRCameraRig)
     public Transform centerEye;
 
     // Start is called before the first frame update
@@ -22,13 +22,13 @@ public class PlayerMovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 获取右手摇杆输入
+        // Get input from the right-hand joystick
         Vector2 rightJoystickInput = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
 
-        // 当 playerObject 和 centerEye 均不为空且摇杆输入不为零时进行移动
+        // Move only when playerObject and centerEye are not null and joystick input is non-zero
         if (playerObject != null && centerEye != null && rightJoystickInput != Vector2.zero)
         {
-            // 以 centerEye 的朝向为基准，但忽略 y 方向
+            // Use the orientation of the centerEye as reference, ignoring the y component
             Vector3 forward = centerEye.forward;
             forward.y = 0;
             forward.Normalize();
@@ -37,11 +37,11 @@ public class PlayerMovementController : MonoBehaviour
             right.y = 0;
             right.Normalize();
 
-            // 根据摇杆输入计算移动方向（前后：右摇杆 Y，左右：右摇杆 X）
+            // Calculate movement direction based on joystick input (forward/back: joystick Y, left/right: joystick X)
             Vector3 movementDirection = forward * rightJoystickInput.y + right * rightJoystickInput.x;
             movementDirection.Normalize();
 
-            // 使用世界坐标系平移 playerObject
+            // Translate playerObject in world space
             playerObject.transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
         }
     }

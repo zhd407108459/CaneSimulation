@@ -6,15 +6,15 @@ using System.Collections.Generic;
 public class CoroutineHaptics : MonoBehaviour
 {
     private InputDevice rightDevice;
-    public float amplitude = 0.5f;       // 震动幅度（0~1）
-    public float impulseDuration = 0.1f; // 每次震动的持续时间
-    public float interval = 0.1f;        // 两次震动之间的间隔
+    public float amplitude = 0.5f;       // Vibration amplitude (0-1)
+    public float impulseDuration = 0.1f; // Duration of each haptic impulse
+    public float interval = 0.1f;        // Interval between impulses
 
     private bool hapticActive = false;
 
     void Start()
     {
-        // 获取右手控制器
+        // Retrieve the right-hand controller
         List<InputDevice> devices = new List<InputDevice>();
         InputDevices.GetDevicesAtXRNode(XRNode.RightHand, devices);
         if (devices.Count > 0)
@@ -37,7 +37,7 @@ public class CoroutineHaptics : MonoBehaviour
         hapticActive = false;
         if (rightDevice.isValid)
         {
-            rightDevice.StopHaptics();
+            rightDevice.StopHaptics(); // Stop any ongoing haptic feedback
         }
     }
 
@@ -47,6 +47,7 @@ public class CoroutineHaptics : MonoBehaviour
         {
             if (rightDevice.isValid)
             {
+                // Send a haptic impulse on channel 0
                 rightDevice.SendHapticImpulse(0, amplitude, impulseDuration);
             }
             yield return new WaitForSeconds(interval);
