@@ -22,6 +22,8 @@ public class CollisionDetector : MonoBehaviour
     // Minimum speed: below this, volume is 0
     [SerializeField] private float minSpeed = 0.1f;
 
+    [SerializeField] private Transform hand;
+
     private MeshRenderer meshRenderer;
     private AudioSource audioSource;
 
@@ -102,7 +104,21 @@ public class CollisionDetector : MonoBehaviour
             }
         }
         
-        // TODO: Use SpherecastAll for points of contact.
+        // TODO: Use CapsuleCastAll for points of contact.
+        RaycastHit[] results = new RaycastHit[20];
+        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, transform.position - hand.position, results);
+        //check hits against collider, and fire audio on contact points for each hit that matches the collider's.
+        if (size > 0)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                if (results[i].collider == other)
+                {
+                    // Spawn audio source at point of contact
+                    //results[i].point;
+                }
+            }
+        }
 
         // Select the appropriate sound based on the collider's tag
         AudioClip selectedSound = defaultCollisionSound;
