@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
-    public GameObject collisionIndicator;
-    public Material defaultMaterial;
-    public Material collisionMaterial;
-    public AudioClip defaultCollisionSound;
+    [SerializeField] private GameObject collisionIndicator;
+    [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material collisionMaterial;
+    [SerializeField] private AudioClip defaultCollisionSound;
 
     // List of tags, each corresponding to an entry in the collisionSounds list
-    public List<string> collisionTags = new List<string>();
+    [SerializeField] private List<string> collisionTags = new List<string>();
     // List of audio clips for each tag; indices must match collisionTags
-    public List<AudioClip> collisionSounds = new List<AudioClip>();
+    [SerializeField] private List<AudioClip> collisionSounds = new List<AudioClip>();
 
     // Toggle whether to show the collision indicator
-    public bool showCollisionIndicator = true;
+    [SerializeField] private bool showCollisionIndicator = true;
 
     // Maximum speed: when reached or exceeded, volume is 1
-    public float maxSpeed = 10f;
+    [SerializeField] private float maxSpeed = 10f;
     // Minimum speed: below this, volume is 0
-    public float minSpeed = 0.1f;
+    [SerializeField] private float minSpeed = 0.1f;
+
+    [SerializeField] private Transform hand;
 
     private MeshRenderer meshRenderer;
     private AudioSource audioSource;
@@ -99,6 +101,22 @@ public class CollisionDetector : MonoBehaviour
             if (meshRenderer != null && collisionMaterial != null)
             {
                 meshRenderer.material = collisionMaterial;
+            }
+        }
+        
+        // TODO: Use CapsuleCastAll for points of contact.
+        RaycastHit[] results = new RaycastHit[20];
+        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, (transform.position - hand.position).normalized, results);
+        //check hits against collider, and fire audio on contact points for each hit that matches the collider's.
+        if (size > 0)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                if (results[i].collider == other)
+                {
+                    // Spawn audio source at point of contact
+                    //results[i].point;
+                }
             }
         }
 
