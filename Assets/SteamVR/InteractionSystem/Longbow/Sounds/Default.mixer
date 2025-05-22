@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-7204966062334760651
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 612e1c1894500b64488b2f5ef249ce05
+  m_EffectName: OculusSpatializerReflection
+  m_MixLevel: 8faf6654b1167df46ba533fcbb76fa7f
+  m_Parameters:
+  - m_ParameterName: GScale
+    m_GUID: bd3ef91e4b1a3924b89b302659576a05
+  - m_ParameterName: E.Rflt On
+    m_GUID: cf577bb521cd2e74699b8952ffb97d89
+  - m_ParameterName: E.Rflt Rev On
+    m_GUID: 2cc92c37ddd279740a655c78b4100771
+  - m_ParameterName: Room X
+    m_GUID: cbc820ce974d80d44b579e048b0b2930
+  - m_ParameterName: Room Y
+    m_GUID: b4b51c718580f7a4cb237f257adf3de1
+  - m_ParameterName: Room Z
+    m_GUID: ffb0206985274294eb7aa8e61b54af39
+  - m_ParameterName: Left
+    m_GUID: 939b2a1f09d6f2d41a673f6a7d66648f
+  - m_ParameterName: Right
+    m_GUID: 585f14f9b04edab47a96f299cf26a009
+  - m_ParameterName: Up
+    m_GUID: 015ed0bcbc7532e4893f0502e3c56302
+  - m_ParameterName: Down
+    m_GUID: ff46b589cb9b90b46aeaff31305e3c77
+  - m_ParameterName: Behind
+    m_GUID: 1ebe87a0f42786345969f2852a7a9f97
+  - m_ParameterName: Front
+    m_GUID: 6a72855517fc5aa4cbfdc1fbaa1ce51f
+  - m_ParameterName: Shared Rev Min
+    m_GUID: 1eb4acbdb47c99e43b059f6e134e6c84
+  - m_ParameterName: Shared Rev Max
+    m_GUID: 8abcbb61989f97b4e8b52302c3b170c6
+  - m_ParameterName: Shared Rev Wet
+    m_GUID: c9961e99ab14f964187121df1391861d
+  - m_ParameterName: Prop Quality
+    m_GUID: 229b9619f285c6b4fb7b0b8896fe5154
+  - m_ParameterName: Voice Limit
+    m_GUID: 0237757a45ab7dd42b19c0b81e4544b0
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -44,6 +92,8 @@ AudioMixerGroupController:
   m_Effects:
   - {fileID: 24400004}
   - {fileID: 244631007607817870}
+  - {fileID: -7204966062334760651}
+  - {fileID: 1988460080878641641}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -92,6 +142,8 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 244083521021316078}
+  - {fileID: 6509370898056121207}
+  - {fileID: 7602454541795009638}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -111,6 +163,8 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 244140514855004308}
+  - {fileID: 1996163756387417097}
+  - {fileID: 8406279863370622108}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -204,6 +258,76 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &1988460080878641641
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 4e1aa7eda0ba8454e9c7a71d4ecb5481
+  m_EffectName: Meta XR Audio Reflection
+  m_MixLevel: 2f341ef924af0d34baf0249c5e5238ae
+  m_Parameters:
+  - m_ParameterName: Refl. Enable
+    m_GUID: b01e4f2d5358e3f40a6d00c38cf9dc55
+  - m_ParameterName: Reverb Enable
+    m_GUID: 4db00af1841e9854e952bcfefe279fda
+  - m_ParameterName: Reverb Level
+    m_GUID: c8b4760ceb66fa042b81c07f9a6a15ad
+  - m_ParameterName: Voice Limit
+    m_GUID: f2f9680f8fa0fee4bb4a7247d91fee82
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &1996163756387417097
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: defbbd46f41e50240b18c0bbe94a7855
+  m_EffectName: OculusSpatializerReflection
+  m_MixLevel: dd660014229b1dd48adf9a3563a5290f
+  m_Parameters:
+  - m_ParameterName: GScale
+    m_GUID: 684bb2e24d48c6c478d6731e17c088c1
+  - m_ParameterName: E.Rflt On
+    m_GUID: 0506cd331e5f9f74bb672e30da06a5b1
+  - m_ParameterName: E.Rflt Rev On
+    m_GUID: 031af97da49b73d43b3f899a8efabcca
+  - m_ParameterName: Room X
+    m_GUID: 791cd55edca973649ab75b8ad50e6987
+  - m_ParameterName: Room Y
+    m_GUID: 081e3ff367ba72a4c9e659452624e4b8
+  - m_ParameterName: Room Z
+    m_GUID: 09b6202f02a1adb40939e6c3ef5962a3
+  - m_ParameterName: Left
+    m_GUID: 4285fe6bc52a21448b2d980062885b67
+  - m_ParameterName: Right
+    m_GUID: 4589b19a2f439f74d99bac313be788d5
+  - m_ParameterName: Up
+    m_GUID: 35537c0433196f448974324e2f20acd3
+  - m_ParameterName: Down
+    m_GUID: c843dbb4d50a45848914943ec8c55d64
+  - m_ParameterName: Behind
+    m_GUID: 6ae31a658bd059e4aad87024db4dcc0d
+  - m_ParameterName: Front
+    m_GUID: 9fb6cc0164890724fbf823e6a962d08b
+  - m_ParameterName: Shared Rev Min
+    m_GUID: 8f23bdaaceac14547babfbf23fdb61b9
+  - m_ParameterName: Shared Rev Max
+    m_GUID: 61d5d8a5ba7b2254d8b23b159ed6214e
+  - m_ParameterName: Shared Rev Wet
+    m_GUID: bd445d8c28dc71e41a32792c042a1c3b
+  - m_ParameterName: Prop Quality
+    m_GUID: ba1ddbf38a700154499b6ba2ce22845f
+  - m_ParameterName: Voice Limit
+    m_GUID: 491a2788ed392524dbc553150149b4dd
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &2629007803741853897
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -249,6 +373,98 @@ AudioMixerEffectController:
     m_GUID: b3f9f762700223e49b4ef772ddb54e8a
   - m_ParameterName: Voice Limit
     m_GUID: f24bbb0854b8ab94092f78764bbd55a7
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &6509370898056121207
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: b5889faea65824145abff197bd2a617a
+  m_EffectName: OculusSpatializerReflection
+  m_MixLevel: 10938941175435e4e81fc0cd2da63bf5
+  m_Parameters:
+  - m_ParameterName: GScale
+    m_GUID: abdd5588471b1f24cae4abe686193be5
+  - m_ParameterName: E.Rflt On
+    m_GUID: 78669a0158a95204685f7d3755a182e8
+  - m_ParameterName: E.Rflt Rev On
+    m_GUID: 59bf8b2308f36584693e50018efcc2b0
+  - m_ParameterName: Room X
+    m_GUID: f8cbf06b7ee7c4a44b8fb07476c7fb95
+  - m_ParameterName: Room Y
+    m_GUID: 5c368410f6690994e8506b1c8200d0b1
+  - m_ParameterName: Room Z
+    m_GUID: 6d69180a6c34047458a20ace2f8289f8
+  - m_ParameterName: Left
+    m_GUID: 885899f7156b0294bac597c3d68cc7e2
+  - m_ParameterName: Right
+    m_GUID: 7bf10db91e373e149b8cff29b5303668
+  - m_ParameterName: Up
+    m_GUID: c446762742d31314d8bbd12567dbb2a0
+  - m_ParameterName: Down
+    m_GUID: 6d88f7247c29d764984b498bfb093092
+  - m_ParameterName: Behind
+    m_GUID: a0ac71a01999ac246a68648464588f96
+  - m_ParameterName: Front
+    m_GUID: e344553b99b0f764a827e1da80faae74
+  - m_ParameterName: Shared Rev Min
+    m_GUID: c221f80dfa86ffd4ca4253b11320a507
+  - m_ParameterName: Shared Rev Max
+    m_GUID: 3e279aea95e95b14eb072be8d77bd94e
+  - m_ParameterName: Shared Rev Wet
+    m_GUID: 1741cde276e4b9c4c829d03fc3366b06
+  - m_ParameterName: Prop Quality
+    m_GUID: 5f9d6b61b195a1f41b2f93b1b1e8869b
+  - m_ParameterName: Voice Limit
+    m_GUID: 65b66ab71dff66e4a80c15234fad01a6
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &7602454541795009638
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 0f93fabb10386b64c844421a5fe9134e
+  m_EffectName: Meta XR Audio Reflection
+  m_MixLevel: 4f6475bf0c6c5b446875fdd4089006bf
+  m_Parameters:
+  - m_ParameterName: Refl. Enable
+    m_GUID: 94ee15df739990b42ac9c5bcf292c9d7
+  - m_ParameterName: Reverb Enable
+    m_GUID: 2697d57e42022b94981e67a4bb7d9602
+  - m_ParameterName: Reverb Level
+    m_GUID: 2e42a6376991f4c42a65b1bb8229ef65
+  - m_ParameterName: Voice Limit
+    m_GUID: b4b49a0b7f4a3b940adc1694aac79df2
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &8406279863370622108
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: bc96537454fb0fc4d871c1013946a8b7
+  m_EffectName: Meta XR Audio Reflection
+  m_MixLevel: 823b22a007a31014a8406ed95e1268c4
+  m_Parameters:
+  - m_ParameterName: Refl. Enable
+    m_GUID: 48f4d0ffa99d76a4097c1a05486284f8
+  - m_ParameterName: Reverb Enable
+    m_GUID: e21d85aa25beeaf4982d9f58e835f68e
+  - m_ParameterName: Reverb Level
+    m_GUID: 5570bb6d13cfd564882427b60d3f3811
+  - m_ParameterName: Voice Limit
+    m_GUID: c8f03d5bf6ea91943a7acd40027f4468
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0

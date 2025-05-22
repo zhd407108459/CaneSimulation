@@ -106,7 +106,7 @@ public class CollisionDetector : MonoBehaviour
         
         // TODO: Use CapsuleCastAll for points of contact.
         RaycastHit[] results = new RaycastHit[20];
-        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, transform.position - hand.position, results);
+        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, (transform.position - hand.position).normalized, results);
         //check hits against collider, and fire audio on contact points for each hit that matches the collider's.
         if (size > 0)
         {
