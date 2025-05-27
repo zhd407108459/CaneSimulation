@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Stone
   - Metal
+  - Bad
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Overlay UI
   - Water
   - UI
   - 
