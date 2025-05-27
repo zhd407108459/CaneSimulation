@@ -1,4 +1,4 @@
 ﻿public interface IVisitor
 {
-    public void Visit(IVisitable visitable);
+    void Visit<T>(T visitable) where T : IVisitable;
 }

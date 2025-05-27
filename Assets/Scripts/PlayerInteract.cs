@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInteract : MonoBehaviour, IVisitor
+public class PlayerInteract : MonoBehaviour, IVisitable
 {
-    List<IVisitable> visitables = new List<IVisitable>();
-    
+    List<IVisitor> visitors = new List<IVisitor>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +20,9 @@ public class PlayerInteract : MonoBehaviour, IVisitor
         {
             Debug.Log("Interaction Attempted!");
             // Visit any available Visitables stored
-            foreach (var visitable in visitables)
+            foreach (var visitor in visitors)
             {
-                Visit(visitable);
+                Accept(visitor);
             }
         }
 
@@ -39,8 +39,8 @@ public class PlayerInteract : MonoBehaviour, IVisitor
         // Remove related visitors
     }
 
-    public void Visit(IVisitable visitable)
+    public void Accept(IVisitor visitor)
     {
-        throw new System.NotImplementedException();
+        visitor.Visit(this);
     }
 }

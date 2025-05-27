@@ -1,20 +1,16 @@
 using UnityEngine;
 
-public class Interactable : MonoBehaviour, IVisitable
+public class Interactable : MonoBehaviour, IVisitor
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Visit<T>(T visitable) where T : IVisitable
     {
-        
+        if (visitable is PlayerInteract player)
+        {
+            TriggerInteraction(player);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void Accept(IVisitor visitor)
+    protected virtual void TriggerInteraction(PlayerInteract player)
     {
         throw new System.NotImplementedException();
     }
