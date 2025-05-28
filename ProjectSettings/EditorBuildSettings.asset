@@ -8,9 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Scene1.unity
     guid: 92673c2d0ae88aa44b797b3ed46d4ee1
+  - enabled: 1
+    path: Assets/Scenes/BusLevel_Turn.unity
+    guid: e3663f3a17ab7bf4d8036e19ba530263
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 5b05bbe36747f6b4b8f646258c9656d2
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 949385cedf68f164ca4399d448007d7a, type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 8412ffa18581b2349bce19d0a2350c66, type: 2}

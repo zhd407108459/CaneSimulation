@@ -14,6 +14,8 @@ TagManager:
   - Overlay UI
   - Water
   - UI
+  - Player
+  - Environment
   - 
   - 
   - 
@@ -37,9 +39,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - OVROverlayCanvas Rendering
   m_SortingLayers:
   - name: Default
     uniqueID: 0

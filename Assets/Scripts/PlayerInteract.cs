@@ -15,7 +15,7 @@ public class PlayerInteract : MonoBehaviour, IVisitable
     // Update is called once per frame
     void Update()
     {
-        if (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) + OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >
+        if (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) + OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) >
             1.8f)
         {
             Debug.Log("Interaction Attempted!");
@@ -30,13 +30,22 @@ public class PlayerInteract : MonoBehaviour, IVisitable
 
     void OnTriggerEnter(Collider other)
     {
-        // Setup visitor programming pattern
         // check for valid Visitable
+        var newVisitors = other.GetComponents<IVisitor>();
+        foreach (var visitor in newVisitors)
+        {
+            visitors.Add(visitor);
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
         // Remove related visitors
+        var newVisitors = other.GetComponents<IVisitor>();
+        foreach (var visitor in newVisitors)
+        {
+            visitors.Remove(visitor);
+        }
     }
 
     public void Accept(IVisitor visitor)

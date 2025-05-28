@@ -11,14 +11,11 @@ GameObject:
   - component: {fileID: 1980125121264690273}
   - component: {fileID: 5737833379150189934}
   - component: {fileID: 8590140356802666236}
-  - component: {fileID: 8337074325966734243}
   - component: {fileID: 2803388999146133916}
   - component: {fileID: 2144429473167759245}
   - component: {fileID: 8882857853301432985}
-  - component: {fileID: 1435413973828458843}
-  - component: {fileID: 4902233342696702145}
-  - component: {fileID: 2911477114360400295}
-  - component: {fileID: 7123886236818947688}
+  - component: {fileID: 7776859602531605849}
+  - component: {fileID: 2462921046104614732}
   m_Layer: 0
   m_Name: Detector
   m_TagString: Untagged
@@ -93,27 +90,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8337074325966734243
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5526995000897247630}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2803388999146133916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,16 +106,11 @@ MonoBehaviour:
   defaultMaterial: {fileID: 2100000, guid: da737d55825a62244a65cc9041e80f93, type: 2}
   collisionMaterial: {fileID: 2100000, guid: 87041e2e9f6a5c24c8f62af7e522be2b, type: 2}
   defaultCollisionSound: {fileID: 8300000, guid: 3e828bc076e0199478a21a6422cd769c, type: 3}
-  collisionTags:
-  - Stone
-  - Metal
-  collisionSounds:
-  - {fileID: 8300000, guid: 7715d227d2a6eca44ad70b55c1d127f1, type: 3}
-  - {fileID: 8300000, guid: 702e8ffd1e627f044b47d5b845fc235e, type: 3}
   showCollisionIndicator: 1
   maxSpeed: 2
   minSpeed: 0.15
   hand: {fileID: 0}
+  collisionAudioSourcePrefab: {fileID: 8709685730655541883, guid: 32b77dfdf2308404ca40467340dacacd, type: 3}
 --- !u!114 &2144429473167759245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,104 +154,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!82 &1435413973828458843
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5526995000897247630}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 243366450046692526, guid: ec12f7772c03e4c4c9e4c2f1643595ad, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 3e828bc076e0199478a21a6422cd769c, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 1
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!65 &4902233342696702145
-BoxCollider:
+--- !u!136 &7776859602531605849
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -297,10 +172,12 @@ BoxCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5, y: 20.41, z: 0.5}
-  m_Center: {x: 0, y: 10.5, z: 0}
---- !u!114 &2911477114360400295
+  serializedVersion: 2
+  m_Radius: 0.50000006
+  m_Height: 21
+  m_Direction: 1
+  m_Center: {x: 0, y: 10, z: 0}
+--- !u!114 &2462921046104614732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -309,34 +186,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5526995000897247630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a07f270ac36c49789466c75ceb88424c, type: 3}
+  m_Script: {fileID: 11500000, guid: 246b9d8c15c1fd54fbb223efc0ac0540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableSpatialization: 1
-  gainBoostDb: 0
-  enableAcoustics: 1
-  reverbSendDb: 0
---- !u!114 &7123886236818947688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5526995000897247630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796f04c5a94947649c2235acef0008ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hrtfIntensity: 1
-  volumetricRadius: 20
-  earlyReflectionsSendDb: 0
-  reverbReach: 0.5
-  occlusionIntensity: 1
-  directivityIntensity: 1
-  directivityPattern: 0
-  directSoundEnabled: 1
-  mediumAbsorption: 1
 --- !u!1 &8162239996390960876
 GameObject:
   m_ObjectHideFlags: 0

@@ -63,8 +63,6 @@ public class DepthHapticFeedback : MonoBehaviour
 
         // Trigger Oculus controller vibration with specified frequency and amplitude
         OVRInput.SetControllerVibration(vibrationFrequency, amplitude, controller);
-
-        Debug.Log($"Max penetration: {maxPenetration}, amplitude: {amplitude}");
     }
 
     void OnTriggerExit(Collider other)

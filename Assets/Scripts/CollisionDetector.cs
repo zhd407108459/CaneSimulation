@@ -1,18 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class CollisionDetector : MonoBehaviour
+public class CollisionDetector : MonoBehaviour, IVisitor
 {
     [SerializeField] private GameObject collisionIndicator;
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material collisionMaterial;
     [SerializeField] private AudioClip defaultCollisionSound;
-
-    // List of tags, each corresponding to an entry in the collisionSounds list
-    [SerializeField] private List<string> collisionTags = new List<string>();
-    // List of audio clips for each tag; indices must match collisionTags
-    [SerializeField] private List<AudioClip> collisionSounds = new List<AudioClip>();
 
     // Toggle whether to show the collision indicator
     [SerializeField] private bool showCollisionIndicator = true;
@@ -23,6 +19,7 @@ public class CollisionDetector : MonoBehaviour
     [SerializeField] private float minSpeed = 0.1f;
 
     [SerializeField] private Transform hand;
+    [SerializeField] private CollisionAudioSource collisionAudioSourcePrefab;
 
     private MeshRenderer meshRenderer;
     private AudioSource audioSource;
@@ -32,6 +29,9 @@ public class CollisionDetector : MonoBehaviour
 
     // Last frame's position to calculate movement speed
     private Vector3 lastPosition;
+
+    private Vector3 lastContactPoint;
+    private bool isExit;
 
     void Start()
     {
@@ -104,7 +104,6 @@ public class CollisionDetector : MonoBehaviour
             }
         }
         
-        // TODO: Use CapsuleCastAll for points of contact.
         RaycastHit[] results = new RaycastHit[20];
         var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, (transform.position - hand.position).normalized, results);
         //check hits against collider, and fire audio on contact points for each hit that matches the collider's.
@@ -114,30 +113,25 @@ public class CollisionDetector : MonoBehaviour
             {
                 if (results[i].collider == other)
                 {
+                    isExit = false;
                     // Spawn audio source at point of contact
                     //results[i].point;
+                    var newVisitables = other.GetComponents<IVisitable>();
+                    if (newVisitables.Length > 0)
+                    {
+                        foreach (var visitable in newVisitables)
+                        {
+                            lastContactPoint = results[i].point;
+                            visitable.Accept(this);
+                        }
+                    }
+                    else
+                    {
+                        var haptic = other.AddComponent<HapticAudioSource>();
+                        haptic.collisionSound = defaultCollisionSound;
+                        Visit(haptic);
+                    }
                 }
-            }
-        }
-
-        // Select the appropriate sound based on the collider's tag
-        AudioClip selectedSound = defaultCollisionSound;
-        for (int i = 0; i < collisionTags.Count; i++)
-        {
-            if (other.CompareTag(collisionTags[i]) && i < collisionSounds.Count && collisionSounds[i] != null)
-            {
-                selectedSound = collisionSounds[i];
-                break;
-            }
-        }
-
-        // Play the selected sound
-        if (audioSource != null)
-        {
-            audioSource.clip = selectedSound;
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
             }
         }
     }
@@ -157,9 +151,39 @@ public class CollisionDetector : MonoBehaviour
             {
                 meshRenderer.material = defaultMaterial;
             }
-            if (audioSource != null && audioSource.isPlaying)
+        }
+        
+        isExit = true;
+        var newVisitables = other.GetComponents<IVisitable>();
+        foreach (var visitable in newVisitables)
+        {
+            visitable.Accept(this);
+        }
+    }
+
+    public void CreateCollisionAudioSourceFromHaptic(HapticAudioSource hapticAudioSource)
+    {
+        if (hapticAudioSource.collisionAudioSource == null)
+        {
+            hapticAudioSource.collisionAudioSource = Instantiate(collisionAudioSourcePrefab, lastContactPoint, Quaternion.identity);
+        }
+
+        hapticAudioSource.collisionAudioSource.transform.position = lastContactPoint;
+    }
+
+    public void Visit<T>(T visitable) where T : IVisitable
+    {
+        if (visitable is HapticAudioSource hapticAudioSource)
+        {
+            if (isExit)
             {
-                audioSource.Stop();
+                hapticAudioSource.collisionAudioSource.StopInstancedAudio();
+            }
+            else
+            {
+                CreateCollisionAudioSourceFromHaptic(hapticAudioSource);
+                hapticAudioSource.collisionAudioSource.gameObject.SetActive(true);
+                hapticAudioSource.collisionAudioSource.PlayInstancedAudio(hapticAudioSource.collisionSound);
             }
         }
     }
