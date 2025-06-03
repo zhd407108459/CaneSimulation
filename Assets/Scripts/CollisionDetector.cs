@@ -33,6 +33,8 @@ public class CollisionDetector : MonoBehaviour, IVisitor
     private Vector3 lastContactPoint;
     private bool isExit;
 
+    private float volume;
+
     void Start()
     {
         // Get the MeshRenderer and apply the default material
@@ -77,6 +79,8 @@ public class CollisionDetector : MonoBehaviour, IVisitor
         {
             normalizedSpeed = Mathf.Clamp01((speed - minSpeed) / (maxSpeed - minSpeed));
         }
+
+        volume = normalizedSpeed;
 
         // Adjust audio volume based on speed
         if (audioSource != null)
@@ -129,7 +133,7 @@ public class CollisionDetector : MonoBehaviour, IVisitor
                     {
                         var haptic = other.AddComponent<HapticAudioSource>();
                         haptic.collisionSound = defaultCollisionSound;
-                        Visit(haptic);
+                        haptic.Accept(this);
                     }
                 }
             }
@@ -182,6 +186,7 @@ public class CollisionDetector : MonoBehaviour, IVisitor
             else
             {
                 CreateCollisionAudioSourceFromHaptic(hapticAudioSource);
+                hapticAudioSource.collisionAudioSource.audioSource.volume = volume;
                 hapticAudioSource.collisionAudioSource.gameObject.SetActive(true);
                 hapticAudioSource.collisionAudioSource.PlayInstancedAudio(hapticAudioSource.collisionSound);
             }

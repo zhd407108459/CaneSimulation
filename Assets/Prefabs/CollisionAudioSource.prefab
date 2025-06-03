@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2002304757484549483}
   - component: {fileID: 3963124398578863603}
   - component: {fileID: 5622795024508768591}
+  - component: {fileID: 561046212254273883}
   - component: {fileID: 8709685730655541883}
   m_Layer: 0
   m_Name: CollisionAudioSource
@@ -50,7 +51,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Spatialize: 0
+  Spatialize: 1
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
@@ -146,6 +147,27 @@ MonoBehaviour:
   gainBoostDb: 0
   enableAcoustics: 1
   reverbSendDb: 0
+--- !u!114 &561046212254273883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5481014969071952225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796f04c5a94947649c2235acef0008ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hrtfIntensity: 1
+  volumetricRadius: 0
+  earlyReflectionsSendDb: 0
+  reverbReach: 0.5
+  occlusionIntensity: 1
+  directivityIntensity: 1
+  directivityPattern: 0
+  directSoundEnabled: 1
+  mediumAbsorption: 1
 --- !u!114 &8709685730655541883
 MonoBehaviour:
   m_ObjectHideFlags: 0

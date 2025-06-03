@@ -8,6 +8,8 @@ public class CollisionAudioSource : MonoBehaviour
 {
     private AudioSource _audioSource;
     private bool _startPlay;
+
+    public AudioSource audioSource => _audioSource;
     
     void Awake()
     {
