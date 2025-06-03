@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Event;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
@@ -8,6 +10,21 @@ public class PlayerMovementController : MonoBehaviour
     public GameObject playerObject;
     // Reference to the Center Eye Transform, assign in the Inspector (e.g., CenterEyeAnchor from OVRCameraRig)
     public Transform centerEye;
+    
+    private EventBinding<CompleteLevel> onCompleteLevel;
+    
+    private LinkedList<KeyValuePair<float, string>> positions = new LinkedList<KeyValuePair<float, string>>();
+
+    void OnEnable()
+    {
+        onCompleteLevel = new EventBinding<CompleteLevel>(OnCompleteLevel);
+        EventBus<CompleteLevel>.Register(onCompleteLevel);
+    }
+
+    void OnDisable()
+    {
+        EventBus<CompleteLevel>.Deregister(onCompleteLevel);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +59,22 @@ public class PlayerMovementController : MonoBehaviour
             movementDirection.Normalize();
 
             // Translate playerObject in world space
-            playerObject.transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
+            playerObject.transform.Translate(movementDirection * (speed * Time.deltaTime), Space.World);
         }
+    }
+
+    void FixedUpdate()
+    {
+        // Record player position per frame.
+        positions.AddLast(new KeyValuePair<float, string>(Time.frameCount, playerObject.transform.position.ToString()));
+    }
+    
+    private void OnCompleteLevel(CompleteLevel level)
+    {
+        // Save collision data.
+        Debug.Log(Application.persistentDataPath);
+
+        string positionData = JsonConvert.SerializeObject(positions, Formatting.Indented);
+        System.IO.File.AppendAllText(Application.persistentDataPath + "/PositionData.json", "Session Time: " + Time.time + "\n" + positionData + "\n\n");
     }
 }

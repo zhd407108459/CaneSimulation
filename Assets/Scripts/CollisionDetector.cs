@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Event;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -22,6 +23,8 @@ public class CollisionDetector : MonoBehaviour, IVisitor
     [SerializeField] private CollisionAudioSource collisionAudioSourcePrefab;
     [SerializeField] private LayerMask collisionLayerMask;
 
+    [SerializeField] private int objectsTouched = 0;
+
     private MeshRenderer meshRenderer;
 
     // Count of currently colliding colliders
@@ -34,6 +37,21 @@ public class CollisionDetector : MonoBehaviour, IVisitor
     private bool isExit;
 
     private float volume;
+    
+    private EventBinding<CompleteLevel> onCompleteLevel;
+    
+    private CollisionRecorder collisionRecorder;
+
+    void OnEnable()
+    {
+        onCompleteLevel = new EventBinding<CompleteLevel>(OnCompleteLevel);
+        EventBus<CompleteLevel>.Register(onCompleteLevel);
+    }
+
+    void OnDisable()
+    {
+        EventBus<CompleteLevel>.Deregister(onCompleteLevel);
+    }
 
     void Start()
     {
@@ -52,6 +70,8 @@ public class CollisionDetector : MonoBehaviour, IVisitor
 
         // Initialize lastPosition
         lastPosition = transform.position;
+        
+        collisionRecorder = new CollisionRecorder();
     }
 
     void Update()
@@ -79,6 +99,7 @@ public class CollisionDetector : MonoBehaviour, IVisitor
     private void OnTriggerEnter(Collider other)
     {
         collisionCount++;
+        collisionRecorder.numCollisions++;
 
         // On first collision, activate indicator and change material
         if (collisionCount == 1)
@@ -210,5 +231,17 @@ public class CollisionDetector : MonoBehaviour, IVisitor
                 hapticAudioSource.collisionAudioSource.PlayInstancedAudio(hapticAudioSource.collisionSound);
             }
         }
+    }
+
+    private void OnCompleteLevel(CompleteLevel level)
+    {
+        // Save collision data.
+        string collisionData = JsonUtility.ToJson(collisionRecorder);
+        System.IO.File.AppendAllText(Application.persistentDataPath + "/CollisionData.json", "Session Time: " + Time.time + "\n" + collisionData + "\n\n");
+    }
+
+    public class CollisionRecorder
+    {
+        public int numCollisions = 0;
     }
 }

@@ -6,6 +6,8 @@ public class HapticAudioSource : MonoBehaviour, IVisitable
 
     public CollisionAudioSource collisionAudioSource;
 
+    public bool touched;
+
     public void Accept(IVisitor visitor)
     {
         visitor.Visit(this);
