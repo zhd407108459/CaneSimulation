@@ -12,9 +12,18 @@ public class DepthHapticFeedback : MonoBehaviour
     public float vibrationFrequency = 0.5f;
     // The cane itself is the depth reference (tip), assign in the Inspector
     public Transform depthReference;
+    
+    // Maximum speed: when reached or exceeded, vibration is 1
+    [SerializeField] private float maxSpeed = 10f;
+    // Minimum speed: below this, vibration is 0
+    [SerializeField] private float minSpeed = 0.1f;
+    [SerializeField] private float minStrength = 0.2f;
 
     // All Colliders on the cane (and its child objects)
     private Collider[] caneColliders;
+    
+    private Vector3 lastPosition;
+    private float vibrationStrength;
 
     void Start()
     {
@@ -30,6 +39,28 @@ public class DepthHapticFeedback : MonoBehaviour
             Debug.LogError("No Colliders found on the depthReference object.");
         }
     }
+    
+    void Update()
+    {
+        // Calculate speed (meters per second) based on positional change
+        float distance = Vector3.Distance(transform.position, lastPosition);
+        float speed = distance / Time.deltaTime;
+        float normalizedSpeed = 0f;
+
+        // Map [minSpeed, maxSpeed] to [0, 1] for volume control
+        if (speed < minSpeed)
+        {
+            normalizedSpeed = 0f;
+        }
+        else
+        {
+            normalizedSpeed = Mathf.Clamp01((speed - minSpeed) / (maxSpeed - minSpeed));
+        }
+
+        vibrationStrength = normalizedSpeed;
+
+        lastPosition = transform.position;
+    }
 
     void OnTriggerStay(Collider other)
     {
@@ -42,6 +73,7 @@ public class DepthHapticFeedback : MonoBehaviour
         // Iterate through all cane colliders to calculate penetration with the other collider
         foreach (Collider col in caneColliders)
         {
+            // TODO: bug where penetration stops being detected after a certain point.
             float penetrationDistance;
             // Physics.ComputePenetration calculates the minimum translation (penetrationDistance)
             // required to separate col and other; returns true if they overlap.
@@ -59,7 +91,7 @@ public class DepthHapticFeedback : MonoBehaviour
 
         // Normalize penetration depth: when maxPenetration reaches maxPenetrationDistance, amplitude is 1
         float normalizedDepth = Mathf.Clamp01(maxPenetration / maxPenetrationDistance);
-        float amplitude = normalizedDepth;
+        float amplitude = normalizedDepth * (minStrength + (vibrationStrength) * (1 - minStrength));
 
         // Trigger Oculus controller vibration with specified frequency and amplitude
         OVRInput.SetControllerVibration(vibrationFrequency, amplitude, controller);

@@ -29,7 +29,8 @@ public class CollisionAudioSource : MonoBehaviour
         _audioSource.clip = audio;
         _audioSource.loop = true;
         _startPlay = true;
-        _audioSource.Play();
+        if(!_audioSource.isPlaying) 
+            _audioSource.Play();
     }
 
     public void StopInstancedAudio()

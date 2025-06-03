@@ -140,6 +140,40 @@ public class CollisionDetector : MonoBehaviour, IVisitor
         }
     }
 
+    void OnTriggerStay(Collider other)
+    {
+        RaycastHit[] results = new RaycastHit[20];
+        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, (transform.position - hand.position).normalized, results);
+        //check hits against collider, and fire audio on contact points for each hit that matches the collider's.
+        if (size > 0)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                if (results[i].collider == other)
+                {
+                    isExit = false;
+                    // Spawn audio source at point of contact
+                    //results[i].point;
+                    var newVisitables = other.GetComponents<IVisitable>();
+                    if (newVisitables.Length > 0)
+                    {
+                        foreach (var visitable in newVisitables)
+                        {
+                            lastContactPoint = results[i].point;
+                            visitable.Accept(this);
+                        }
+                    }
+                    else
+                    {
+                        var haptic = other.AddComponent<HapticAudioSource>();
+                        haptic.collisionSound = defaultCollisionSound;
+                        haptic.Accept(this);
+                    }
+                }
+            }
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         collisionCount--;
