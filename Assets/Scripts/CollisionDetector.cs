@@ -20,9 +20,9 @@ public class CollisionDetector : MonoBehaviour, IVisitor
 
     [SerializeField] private Transform hand;
     [SerializeField] private CollisionAudioSource collisionAudioSourcePrefab;
+    [SerializeField] private LayerMask collisionLayerMask;
 
     private MeshRenderer meshRenderer;
-    private AudioSource audioSource;
 
     // Count of currently colliding colliders
     private int collisionCount = 0;
@@ -43,15 +43,6 @@ public class CollisionDetector : MonoBehaviour, IVisitor
         {
             meshRenderer.material = defaultMaterial;
         }
-
-        // Get or add an AudioSource component and configure looping
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
-        audioSource.loop = true;
-        audioSource.playOnAwake = false;
 
         // Show or hide the collision indicator based on the setting
         if (collisionIndicator != null && !showCollisionIndicator)
@@ -82,12 +73,6 @@ public class CollisionDetector : MonoBehaviour, IVisitor
 
         volume = normalizedSpeed;
 
-        // Adjust audio volume based on speed
-        if (audioSource != null)
-        {
-            audioSource.volume = normalizedSpeed;
-        }
-
         lastPosition = transform.position;
     }
 
@@ -109,7 +94,7 @@ public class CollisionDetector : MonoBehaviour, IVisitor
         }
         
         RaycastHit[] results = new RaycastHit[20];
-        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, (transform.position - hand.position).normalized, results);
+        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, (transform.position - hand.position).normalized, results, 4, collisionLayerMask);
         //check hits against collider, and fire audio on contact points for each hit that matches the collider's.
         if (size > 0)
         {
@@ -143,7 +128,7 @@ public class CollisionDetector : MonoBehaviour, IVisitor
     void OnTriggerStay(Collider other)
     {
         RaycastHit[] results = new RaycastHit[20];
-        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, (transform.position - hand.position).normalized, results);
+        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, (transform.position - hand.position).normalized, results, 4, collisionLayerMask);
         //check hits against collider, and fire audio on contact points for each hit that matches the collider's.
         if (size > 0)
         {

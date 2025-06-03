@@ -94,6 +94,7 @@ public class DepthHapticFeedback : MonoBehaviour
         float amplitude = normalizedDepth * (minStrength + (vibrationStrength) * (1 - minStrength));
 
         // Trigger Oculus controller vibration with specified frequency and amplitude
+        // frequency doesn't currently matter as we are developing on a Quest 2 which doesn't support variable frequency.
         OVRInput.SetControllerVibration(vibrationFrequency, amplitude, controller);
     }
 

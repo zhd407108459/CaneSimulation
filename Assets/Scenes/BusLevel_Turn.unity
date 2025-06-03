@@ -1376,7 +1376,7 @@ GameObject:
   - component: {fileID: 291009015}
   - component: {fileID: 291009014}
   - component: {fileID: 291009013}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PolyShape
   m_TagString: Bad
   m_Icon: {fileID: 0}
@@ -31412,6 +31412,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5069421085078764781, guid: cf59f0354dcd3844781c304aa622e5a9, type: 3}
+      propertyPath: warningSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f469358269d38b143b9f7bc2d6b57a29, type: 3}
     - target: {fileID: 5101959684129971773, guid: cf59f0354dcd3844781c304aa622e5a9, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -34978,7 +34982,7 @@ GameObject:
   - component: {fileID: 1592737532}
   - component: {fileID: 1592737531}
   - component: {fileID: 1592737537}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (1)
   m_TagString: Bad
   m_Icon: {fileID: 0}
@@ -37772,7 +37776,7 @@ GameObject:
   - component: {fileID: 2105388120}
   - component: {fileID: 2105388119}
   - component: {fileID: 2105388125}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (2)
   m_TagString: Bad
   m_Icon: {fileID: 0}
