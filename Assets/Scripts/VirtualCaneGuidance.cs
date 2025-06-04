@@ -77,6 +77,7 @@ public class VirtualCaneGuidance : MonoBehaviour
                 }
             }
         }
+        
     }
 
     void OnTriggerExit(Collider other)
