@@ -14,6 +14,10 @@ public class VirtualCaneGuidance : MonoBehaviour
     [SerializeField] private float maxYAngleRad = 0.05f;
 
     [SerializeField] private AudioClip warningSound;
+    [SerializeField] private MeshRenderer caneGuideMesh;
+    [SerializeField] private Transform caneGuideParent;
+    private Camera _camera;
+    private Vector3 _guideRelativePos;
     
     private AudioSource _audioSource;
     
@@ -24,6 +28,8 @@ public class VirtualCaneGuidance : MonoBehaviour
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        _camera = Camera.main;
+        _guideRelativePos = caneGuideParent.transform.position - _camera.transform.position;
     }
 
     // Update is called once per frame
@@ -33,10 +39,12 @@ public class VirtualCaneGuidance : MonoBehaviour
         if (y > maxYAngleRad)
         {
             yAngleExceeded = true;
+            caneGuideMesh.enabled = true;
         }
         else
         {
             yAngleExceeded = false;
+            caneGuideMesh.enabled = false;
         }
 
         if (yAngleExceeded || guideCollisions > 0)
@@ -50,6 +58,9 @@ public class VirtualCaneGuidance : MonoBehaviour
         {
             _audioSource.Stop();
         }
+
+        caneGuideParent.position = _camera.transform.position + _guideRelativePos;
+        caneGuideParent.rotation = Quaternion.Euler(0, _camera.transform.eulerAngles.y, 0);
     }
 
     void OnTriggerEnter(Collider other)
@@ -59,6 +70,11 @@ public class VirtualCaneGuidance : MonoBehaviour
             if (other == collider)
             {
                 guideCollisions++;
+                if(collider.TryGetComponent<MeshRenderer>(out var meshRenderer))
+                {
+                    meshRenderer.enabled = true;
+                    meshRenderer.material.color = new Color(1, 0, 0, 0.4f);
+                }
             }
         }
     }
@@ -70,6 +86,11 @@ public class VirtualCaneGuidance : MonoBehaviour
             if (other == collider)
             {
                 guideCollisions--;
+                if(collider.TryGetComponent<MeshRenderer>(out var meshRenderer))
+                {
+                    meshRenderer.material.color = new Color(0, 0, 0, 0.0f);
+                    meshRenderer.enabled = false;
+                }
             }
         }
     }
