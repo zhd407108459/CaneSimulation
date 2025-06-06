@@ -6580,6 +6580,7 @@ GameObject:
   - component: {fileID: 2300120}
   - component: {fileID: 9500090}
   - component: {fileID: 6400036}
+  - component: {fileID: 7861866392145522880}
   m_Layer: 0
   m_Name: chairs00
   m_TagString: Untagged
@@ -6697,6 +6698,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: ce743c2438a425142b98835a209545c1, type: 3}
+--- !u!114 &7861866392145522880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8593f453844a4f8cd67f93275f9541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionSound: {fileID: 8300000, guid: 5e3a7764338e06046bc66078db219fcc, type: 3}
+  collisionAudioSource: {fileID: 0}
+  touched: 0
 --- !u!1 &100126
 GameObject:
   m_ObjectHideFlags: 0

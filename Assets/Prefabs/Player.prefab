@@ -557,6 +557,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 211270396550108827}
     m_Modifications:
+    - target: {fileID: 1404712240880979790, guid: b4a8b1deec9a10d4b83160a682d980f5, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3e828bc076e0199478a21a6422cd769c, type: 3}
     - target: {fileID: 1980125121264690273, guid: b4a8b1deec9a10d4b83160a682d980f5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -605,6 +609,10 @@ PrefabInstance:
       propertyPath: hand
       value: 
       objectReference: {fileID: 207583363487540109}
+    - target: {fileID: 5484645916310433759, guid: b4a8b1deec9a10d4b83160a682d980f5, type: 3}
+      propertyPath: warningSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3e828bc076e0199478a21a6422cd769c, type: 3}
     - target: {fileID: 5484645916310433759, guid: b4a8b1deec9a10d4b83160a682d980f5, type: 3}
       propertyPath: caneGuideMesh
       value: 
