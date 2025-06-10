@@ -19,6 +19,8 @@ public class CollisionDetector : MonoBehaviour, IVisitor
     // Minimum speed: below this, volume is 0
     [SerializeField] private float minSpeed = 0.1f;
 
+    [SerializeField] private float collisionOverlapRadius = 0.2f;
+
     [SerializeField] private Transform hand;
     [SerializeField] private CollisionAudioSource collisionAudioSourcePrefab;
     [SerializeField] private LayerMask collisionLayerMask;
@@ -72,6 +74,8 @@ public class CollisionDetector : MonoBehaviour, IVisitor
         lastPosition = transform.position;
         
         collisionRecorder = new CollisionRecorder();
+        
+        GameDataCollector.instance.AddTaskStartRecord();
     }
 
     void Update()
@@ -115,7 +119,7 @@ public class CollisionDetector : MonoBehaviour, IVisitor
         }
         
         RaycastHit[] results = new RaycastHit[20];
-        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, 0.5f, (transform.position - hand.position).normalized, results, 4, collisionLayerMask);
+        var size = Physics.CapsuleCastNonAlloc(hand.position, transform.position, collisionOverlapRadius, (transform.position - hand.position).normalized, results, 4, collisionLayerMask);
         //check hits against collider, and fire audio on contact points for each hit that matches the collider's.
         if (size > 0)
         {
@@ -124,6 +128,8 @@ public class CollisionDetector : MonoBehaviour, IVisitor
                 if (results[i].collider == other)
                 {
                     isExit = false;
+                    // Record the collision.
+                    GameDataCollector.instance.AddPlayerCollisionRecord(transform.position, results[i].point, results[i].collider.gameObject.name);
                     // Spawn audio source at point of contact
                     //results[i].point;
                     var newVisitables = other.GetComponents<IVisitable>();
@@ -235,9 +241,7 @@ public class CollisionDetector : MonoBehaviour, IVisitor
 
     private void OnCompleteLevel(CompleteLevel level)
     {
-        // Save collision data.
-        string collisionData = JsonUtility.ToJson(collisionRecorder);
-        System.IO.File.AppendAllText(Application.persistentDataPath + "/CollisionData.json", "Session Time: " + Time.time + "\n" + collisionData + "\n\n");
+        GameDataCollector.instance.AddTaskCompletionRecord(Time.fixedTime);
     }
 
     public class CollisionRecorder

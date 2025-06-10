@@ -112,11 +112,13 @@ MonoBehaviour:
   showCollisionIndicator: 1
   maxSpeed: 2
   minSpeed: 0.15
+  collisionOverlapRadius: 0.1
   hand: {fileID: 0}
   collisionAudioSourcePrefab: {fileID: 8709685730655541883, guid: 32b77dfdf2308404ca40467340dacacd, type: 3}
   collisionLayerMask:
     serializedVersion: 2
     m_Bits: 129
+  objectsTouched: 0
 --- !u!114 &2144429473167759245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +218,8 @@ MonoBehaviour:
   detectorExtents: {fileID: 1980125121264690273}
   maxYAngleRad: 0.05
   warningSound: {fileID: 8300000, guid: f469358269d38b143b9f7bc2d6b57a29, type: 3}
+  caneGuideMesh: {fileID: 0}
+  caneGuideParent: {fileID: 0}
 --- !u!82 &1404712240880979790
 AudioSource:
   m_ObjectHideFlags: 0
