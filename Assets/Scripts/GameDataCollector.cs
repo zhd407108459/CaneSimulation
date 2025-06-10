@@ -31,7 +31,7 @@ public class GameDataCollector : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            AddPlayerCollisionRecord(new Vector3(1, 1, 1), new Vector3(2, 2, 2), "Test");
+            AddPlayerCollisionEnterRecord(new Vector3(1, 1, 1), new Vector3(2, 2, 2), "Test");
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -90,9 +90,41 @@ public class GameDataCollector : MonoBehaviour
     }
 
     /// <summary>
-    /// Add a collision record: player position, collision position, and object name.
+    /// Player collision enter event.
     /// </summary>
-    public void AddPlayerCollisionRecord(Vector3 playerPosition, Vector3 collisionPosition, string objectName)
+    public void AddPlayerCollisionEnterRecord(Vector3 playerPosition, Vector3 collisionPosition, string objectName)
+    {
+        RecordCollision("PlayerCollisionEnter", playerPosition, collisionPosition, objectName);
+    }
+
+    /// <summary>
+    /// Player collision exit event.
+    /// </summary>
+    public void AddPlayerCollisionExitRecord(Vector3 playerPosition, Vector3 collisionPosition, string objectName)
+    {
+        RecordCollision("PlayerCollisionExit", playerPosition, collisionPosition, objectName);
+    }
+
+    /// <summary>
+    /// Cane collision enter event.
+    /// </summary>
+    public void AddCaneCollisionEnterRecord(Vector3 playerPosition, Vector3 collisionPosition, string objectName)
+    {
+        RecordCollision("CaneCollisionEnter", playerPosition, collisionPosition, objectName);
+    }
+
+    /// <summary>
+    /// Cane collision exit event.
+    /// </summary>
+    public void AddCaneCollisionExitRecord(Vector3 playerPosition, Vector3 collisionPosition, string objectName)
+    {
+        RecordCollision("CaneCollisionExit", playerPosition, collisionPosition, objectName);
+    }
+
+    /// <summary>
+    /// Shared helper for collision records.
+    /// </summary>
+    private void RecordCollision(string recordType, Vector3 playerPosition, Vector3 collisionPosition, string objectName)
     {
         string systemTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
         string unityTime = Time.time.ToString("F3");
@@ -100,7 +132,7 @@ public class GameDataCollector : MonoBehaviour
         {
             systemTime,
             unityTime,
-            "Collision",
+            recordType,
             playerPosition.x.ToString("F3"),
             playerPosition.y.ToString("F3"),
             playerPosition.z.ToString("F3"),
