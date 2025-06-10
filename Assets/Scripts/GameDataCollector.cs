@@ -25,26 +25,6 @@ public class GameDataCollector : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            AddGeneralRecord("Anything", "Can", "Be", "Recorded", "Here");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            AddPlayerCollisionRecord(new Vector3(1, 1, 1), new Vector3(2, 2, 2), "Test");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            AddPlayerCrossBoundaryRecord(new Vector3(3, 3, 3));
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            AddTaskStartRecord();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            AddTaskCompletionRecord(Time.time);
-        }
     }
 
     private void InitializeFile()
