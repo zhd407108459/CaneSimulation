@@ -38,6 +38,7 @@ public class Announcer : MonoBehaviour
         // Event to start playing bus sound.
         // wait for sound to finish playing
         _speaker.SpeakQueued("When your cane touches the ground it will vibrate and make a sound like this: ");
+        _speaker.
         // Event to start playing ground scrape sound.
         // wait for sound to finish playing
         audioMixer.SetFloat("Volume (of Sound Effects 2)", -80f);
@@ -52,5 +53,16 @@ public class Announcer : MonoBehaviour
     void Update()
     {
         transform.position = follow.position;
+    }
+
+    void OnGameEndReached()
+    {
+        _speaker.Speak("You have reached the end!");
+        _speaker.SpeakQueued("You finished the game in " + Time.time + " seconds.");
+    }
+
+    void OnOutOfBounds()
+    {
+        _speaker.Speak("You are approaching the out of bounds area, please return.");
     }
 }
