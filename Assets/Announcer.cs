@@ -38,7 +38,6 @@ public class Announcer : MonoBehaviour
         // Event to start playing bus sound.
         // wait for sound to finish playing
         _speaker.SpeakQueued("When your cane touches the ground it will vibrate and make a sound like this: ");
-        _speaker.
         // Event to start playing ground scrape sound.
         // wait for sound to finish playing
         audioMixer.SetFloat("Volume (of Sound Effects 2)", -80f);
