@@ -128,8 +128,8 @@ public class CollisionDetector : MonoBehaviour, IVisitor
                 if (results[i].collider == other)
                 {
                     isExit = false;
-                    // Record the collision.
-                    GameDataCollector.instance.AddPlayerCollisionRecord(transform.position, results[i].point, results[i].collider.gameObject.name);
+                    // Record the collision enter.
+                    GameDataCollector.instance.AddCaneCollisionEnterRecord(transform.position, results[i].point, results[i].collider.gameObject.name);
                     // Spawn audio source at point of contact
                     //results[i].point;
                     var newVisitables = other.GetComponents<IVisitable>();
@@ -188,6 +188,9 @@ public class CollisionDetector : MonoBehaviour, IVisitor
 
     private void OnTriggerExit(Collider other)
     {
+        // Record the collision exit.
+        GameDataCollector.instance.AddCaneCollisionExitRecord(transform.position, other.transform.position, other.gameObject.name);
+
         collisionCount--;
         if (collisionCount <= 0)
         {

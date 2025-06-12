@@ -19,6 +19,7 @@ public class PlayerHeadCollision : MonoBehaviour
     
     void OnTriggerEnter(Collider other)
     {
+        GameDataCollector.instance.AddPlayerCollisionEnterRecord(transform.position, other.transform.position, other.gameObject.name);
         if (other.CompareTag("Extents"))
         {
             GameDataCollector.instance.AddPlayerCrossBoundaryRecord(transform.position);
@@ -28,6 +29,7 @@ public class PlayerHeadCollision : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        GameDataCollector.instance.AddPlayerCollisionExitRecord(transform.position, other.transform.position, other.gameObject.name);
         if (other.CompareTag("Extents"))
         {
             audioSource.Stop();
