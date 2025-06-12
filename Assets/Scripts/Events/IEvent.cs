@@ -6,4 +6,14 @@
     {
         
     }
+
+    public struct StartGoalSound : IEvent
+    {
+        
+    }
+
+    public struct StopGoalSound : IEvent
+    {
+        
+    }
 }
