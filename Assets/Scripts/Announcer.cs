@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Event;
@@ -17,6 +18,10 @@ public class Announcer : MonoBehaviour
 
     private TTSSpeaker _speaker;
     [SerializeField] private AudioSource audioSource;
+    
+    private EventBinding<CompleteLevel> _onCompleteLevel;
+    private EventBinding<OutOfBounds> _onOutOfBounds;
+    private EventBinding<CaneTooHigh> _onCaneTooHigh;
 
     private void Awake()
     {
@@ -39,6 +44,23 @@ public class Announcer : MonoBehaviour
         StartCoroutine(SpeakIntro());
     }
 
+    private void OnEnable()
+    {
+        _onCompleteLevel = new EventBinding<CompleteLevel>(OnGameEndReached);
+        EventBus<CompleteLevel>.Register(_onCompleteLevel);
+        _onOutOfBounds = new EventBinding<OutOfBounds>(OnOutOfBounds);
+        EventBus<OutOfBounds>.Register(_onOutOfBounds);
+        _onCaneTooHigh = new EventBinding<CaneTooHigh>(OnCaneTooHigh);
+        EventBus<CaneTooHigh>.Register(_onCaneTooHigh);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<CompleteLevel>.Deregister(_onCompleteLevel);
+        EventBus<OutOfBounds>.Deregister(_onOutOfBounds);
+        EventBus<CaneTooHigh>.Deregister(_onCaneTooHigh);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -53,7 +75,18 @@ public class Announcer : MonoBehaviour
 
     void OnOutOfBounds()
     {
-        _speaker.Speak("You are approaching the out of bounds area, please return.");
+        if (!_speaker.IsActive)
+        {
+            _speaker.Speak("You are approaching an out of bounds area, please return.");
+        }
+    }
+
+    void OnCaneTooHigh()
+    {
+        if (!_speaker.IsActive)
+        {
+            _speaker.Speak("Cane is too high! Please lower the cane.");
+        }
     }
 
     IEnumerator SpeakIntro()

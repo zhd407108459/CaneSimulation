@@ -16,4 +16,14 @@
     {
         
     }
+
+    public struct OutOfBounds : IEvent
+    {
+        
+    }
+
+    public struct CaneTooHigh : IEvent
+    {
+        
+    }
 }

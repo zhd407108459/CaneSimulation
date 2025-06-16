@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Event;
 using UnityEngine;
 
 /// <summary>
@@ -53,6 +54,7 @@ public class VirtualCaneGuidance : MonoBehaviour
             _audioSource.clip = warningSound;
             if(!_audioSource.isPlaying)
                 _audioSource.Play();
+            EventBus<CaneTooHigh>.Raise(new CaneTooHigh());
         }
         else
         {
