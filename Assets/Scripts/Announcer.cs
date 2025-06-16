@@ -4,19 +4,20 @@ using Event;
 using Meta.WitAi.TTS.Utilities;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 public class Announcer : MonoBehaviour
 {
     public static Announcer instance;
-    
+
     [SerializeField] private Transform follow;
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private AudioClip sampleGroundSound;
     [SerializeField] private AudioClip sampleObstacleSound;
 
     private TTSSpeaker _speaker;
-    private AudioSource _audioSource;
-    
+    [SerializeField] private AudioSource audioSource;
+
     private void Awake()
     {
         if (instance == null)
@@ -33,34 +34,9 @@ public class Announcer : MonoBehaviour
     void Start()
     {
         _speaker = GetComponent<TTSSpeaker>();
-        _audioSource = GetComponent<AudioSource>();
-        
+
         // Start Coroutine
-        audioMixer.SetFloat("Volume (of Sound Effects)", -80f);
-        audioMixer.SetFloat("Volume (of Sound Effects 3)", -80f);
-        // TODO: turn into coroutine
-        _speaker.Speak("Welcome to the VR Cane Simulation!");
-        _speaker.SpeakQueued("Your goal is to reach the bus, indicated by this sound: ");
-        audioMixer.SetFloat("Volume (of Sound Effects 2)", 0.0f);
-        audioMixer.SetFloat("Volume (of Sound Effects 3)", 0.0f);
-        // Event to start playing bus sound.
-        EventBus<StartGoalSound>.Raise(new StartGoalSound());
-        // wait for sound to finish playing
-        // yield return new WaitForSeconds(1.5f);
-        EventBus<StopGoalSound>.Raise(new StopGoalSound());
-        audioMixer.SetFloat("Volume (of Sound Effects 3)", -80f);
-        _speaker.SpeakQueued("When your cane touches the ground it will vibrate and make a sound like this: ");
-        // Event to start playing ground scrape sound.
-        // wait for sound to finish playing
-        audioMixer.SetFloat("Volume (of Sound Effects 2)", -80f);
-        _speaker.SpeakQueued("When you touch an obstacle, a different sound will start playing. This means you should try and avoid it.");
-        _speaker.SpeakQueued("One example of a sound an obstacle could make is this:");
-        // Event to start playing obstacle sound.
-        // wait for sound to finish playing
-        _speaker.SpeakQueued("With that, you are now ready to play! Good luck and have fun.");
-        // Unmute all sounds.
-        audioMixer.SetFloat("Volume (of Sound Effects)", 0f);
-        audioMixer.SetFloat("Volume (of Sound Effects 3)", 0f);
+        StartCoroutine(SpeakIntro());
     }
 
     // Update is called once per frame
@@ -79,4 +55,75 @@ public class Announcer : MonoBehaviour
     {
         _speaker.Speak("You are approaching the out of bounds area, please return.");
     }
+
+    IEnumerator SpeakIntro()
+    {
+        int i = 0;
+        audioMixer.SetFloat("volumeSFX1", -80f);
+        audioMixer.SetFloat("volumeSFX2", -80f);
+        audioMixer.SetFloat("volumeSFX3", -80f);
+        while (i < 100)
+        {
+            if (!_speaker.IsActive)
+            {
+                switch (i)
+                {
+                    case 0:
+                        _speaker.Speak("Welcome to the VR Cane Simulation!");
+                        break;
+                    
+                    case 1:
+                        _speaker.Speak("Your goal is to reach the bus, indicated by this sound: ");
+                        break;
+                    
+                    case 2:
+                        audioMixer.SetFloat("volumeSFX3", 0.0f);
+                        // Event to start playing bus sound.
+                        EventBus<StartGoalSound>.Raise(new StartGoalSound());
+                        // wait for sound to finish playing
+                        yield return new WaitForSeconds(1.5f);
+                        EventBus<StopGoalSound>.Raise(new StopGoalSound());
+                        audioMixer.SetFloat("volumeSFX3", -80f);
+                        _speaker.Speak("When your cane touches the ground it will vibrate and make a sound like this: ");
+                        break;
+                    case 3:
+                        // Event to start playing ground scrape sound.
+                        audioSource.PlayOneShot(sampleGroundSound);
+                        // wait for sound to finish playing
+                        yield return new WaitForSeconds(1.5f);
+                        audioSource.Stop();
+                        
+                        _speaker.Speak(
+                            "When you touch an obstacle, a different sound will start playing. This means you should try and avoid it.");
+                        break;
+                    case 4:
+                        _speaker.Speak("One example of a sound an obstacle could make is this:");
+                        break;
+                    case 5:
+                        // Event to start playing obstacle sound.
+                        audioSource.PlayOneShot(sampleObstacleSound);
+                        // wait for sound to finish playing
+                        yield return new WaitForSeconds(1.5f);
+                        audioSource.Stop();
+                        
+                        _speaker.Speak("With that, you are now ready to play! Good luck and have fun.");
+                        // Unmute all sounds.
+                        audioMixer.SetFloat("volumeSFX1", 0f);
+                        audioMixer.SetFloat("volumeSFX2", 0f);
+                        audioMixer.SetFloat("volumeSFX3", 0f);
+                        EventBus<StartGoalSound>.Raise(new StartGoalSound());
+                        break;
+                    default:
+                        i = 100;
+                        break;
+                }
+                i++;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+    }
+
 }

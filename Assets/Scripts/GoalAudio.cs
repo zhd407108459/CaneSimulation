@@ -9,7 +9,7 @@ public class GoalAudio : MonoBehaviour
     private AudioSource _audioSource;
     private EventBinding<StartGoalSound> _onGoalSound;
     private EventBinding<StopGoalSound> _onStopGoalSound;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +18,7 @@ public class GoalAudio : MonoBehaviour
 
     private void OnEnable()
     {
+        _audioSource = GetComponent<AudioSource>();
         _onGoalSound = new EventBinding<StartGoalSound>(OnGoalSound);
         EventBus<StartGoalSound>.Register(_onGoalSound);
         _onStopGoalSound = new EventBinding<StopGoalSound>(OnStopGoalSound);
