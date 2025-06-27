@@ -22,6 +22,8 @@ public class Announcer : MonoBehaviour
     private EventBinding<CompleteLevel> _onCompleteLevel;
     private EventBinding<OutOfBounds> _onOutOfBounds;
     private EventBinding<CaneTooHigh> _onCaneTooHigh;
+    
+    private bool _hasStarted = false;
 
     private void Awake()
     {
@@ -65,6 +67,12 @@ public class Announcer : MonoBehaviour
     void Update()
     {
         transform.position = follow.position;
+
+        if (!_hasStarted && OVRInput.Get(OVRInput.Button.One))
+        {
+            _hasStarted = true;
+            StartCoroutine(SpeakIntro());
+        }
     }
 
     void OnGameEndReached()
@@ -145,6 +153,7 @@ public class Announcer : MonoBehaviour
                         audioMixer.SetFloat("volumeSFX2", 0f);
                         audioMixer.SetFloat("volumeSFX3", 0f);
                         EventBus<StartGoalSound>.Raise(new StartGoalSound());
+                        GameDataCollector.instance.AddTaskStartRecord();
                         break;
                     default:
                         i = 100;

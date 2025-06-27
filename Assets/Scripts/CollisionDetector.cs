@@ -74,8 +74,6 @@ public class CollisionDetector : MonoBehaviour, IVisitor
         lastPosition = transform.position;
         
         collisionRecorder = new CollisionRecorder();
-        
-        GameDataCollector.instance.AddTaskStartRecord();
     }
 
     void Update()
