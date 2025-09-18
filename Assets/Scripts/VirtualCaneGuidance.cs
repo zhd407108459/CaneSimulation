@@ -69,8 +69,8 @@ public class VirtualCaneGuidance : MonoBehaviour
         {
             // Do something to indicate issue.
             _audioSource.clip = warningSound;
-            if(!_audioSource.isPlaying)
-                _audioSource.Play();
+            /*if(!_audioSource.isPlaying)
+                _audioSource.Play();*/
             EventBus<CaneTooHigh>.Raise(new CaneTooHigh());
         }
         else
@@ -82,6 +82,7 @@ public class VirtualCaneGuidance : MonoBehaviour
         caneGuideParent.rotation = Quaternion.Euler(0, _camera.transform.eulerAngles.y, 0);
 
         // Switches the hand the cane is in by squeezing both triggers on the corresponding controller.
+        
         // Right Hand
         if (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) + 
             OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) > 1.8f)

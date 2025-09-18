@@ -43,7 +43,7 @@ public class Announcer : MonoBehaviour
         _speaker = GetComponent<TTSSpeaker>();
 
         // Start Coroutine
-        StartCoroutine(SpeakIntro());
+        //StartCoroutine(SpeakIntro());
     }
 
     private void OnEnable()
@@ -83,7 +83,7 @@ public class Announcer : MonoBehaviour
 
     void OnOutOfBounds()
     {
-        if (!_speaker.IsActive)
+        if (!_speaker.IsActive && _hasStarted)
         {
             _speaker.Speak("You are approaching an out of bounds area, please return.");
         }
@@ -91,7 +91,7 @@ public class Announcer : MonoBehaviour
 
     void OnCaneTooHigh()
     {
-        if (!_speaker.IsActive)
+        if (!_speaker.IsActive && _hasStarted)
         {
             _speaker.Speak("Cane is too high! Please lower the cane.");
         }
